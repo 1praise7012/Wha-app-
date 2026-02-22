@@ -1,0 +1,20 @@
+{
+  "name": "MASTER IP Ultra PWA",
+  "short_name": "MASTER IP",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00FF00",
+  "icons": [
+    {
+      "src": "A_logo_design_for_\"Master_IP_Security\"_is_set_agai.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "A_logo_design_for_\"Master_IP_Security\"_is_set_agai.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
