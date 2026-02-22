@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASTER IP ULTRA PWA</title>
+<link rel="manifest" href="manifest.json">
+
+<style>
+body {
+  background:black;
+  color:lime;
+  font-family:monospace;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+}
+
+header {
+  background:#111;
+  padding:15px;
+  text-align:center;
+  border-bottom:1px solid lime;
+}
+
+header img.logo {
+  width:100px;
+  margin-bottom:5px;
+}
+
+nav {
+  display:flex;
+  justify-content:space-around;
+  border-top:1px solid lime;
+  border-bottom:1px solid lime;
+  background:#111;
+}
+
+nav button {
+  flex:1;
+  padding:10px;
+  border:none;
+  background:#111;
+  color:lime;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+nav button.active {
+  background:lime;
+  color:black;
+}
+
+section {
+  display:none;
+  padding:15px;
+  height:calc(100vh - 120px);
+  overflow-y:auto;
+}
+
+section.active {
+  display:block;
+}
+
+input, select, textarea {
+  width:95%;
+  padding:10px;
+  margin:10px 0;
+  background:#111;
+  color:lime;
+  border:1px solid lime;
+  border-radius:5px;
+}
+
+button.action {
+  width:95%;
+  padding:12px;
+  margin:10px 0;
+  background:lime;
+  color:black;
+  font-weight:bold;
+  border:none;
+  cursor:pointer;
+  border-radius:5px;
+}
+
+button.action:hover {
+  background:#a0ff00;
+}
+
+.result {
+  margin-top:15px;
+  padding:10px;
+  border:1px solid lime;
+  border-radius:5px;
+}
+
+footer {
+  padding:10px;
+  text-align:center;
+  border-top:1px solid lime;
+  font-size:0.9em;
+}
+
+a {
+  color:lime;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <img src="https://files.catbox.moe/u1npgd.jpg" class="logo" alt="MASTER IP Logo">
+  <h1>MASTER IP ULTRA 🚀</h1>
+</header>
+
+<nav>
+  <button class="tab-btn active" data-tab="report">Report</button>
+  <button class="tab-btn" data-tab="unban">Unban</button>
+  <button class="tab-btn" data-tab="help">Help</button>
+</nav>
+
+<section id="report" class="active">
+  <h2>Report a Violation</h2>
+  <input type="text" id="number" placeholder="Enter Phone Number (+263...)">
+  <select id="violation">
+    <option value="0">Select Violation Type</option>
+    <option value="1">Spam Messages</option>
+    <option value="2">Harassment</option>
+    <option value="3">Threats</option>
+    <option value="4">Impersonation</option>
+  </select>
+  <select id="frequency">
+    <option value="0">How Often?</option>
+    <option value="1">Once</option>
+    <option value="2">Multiple Times</option>
+    <option value="3">Daily</option>
+  </select>
+  <button class="action" onclick="analyze()">Analyze Case</button>
+  <div id="reportOutput" class="result"></div>
+</section>
+
+<section id="unban">
+  <h2>Request Account Unban</h2>
+  <input type="text" id="banNumber" placeholder="Enter Your Banned Phone Number (+263...)">
+  
+  <select id="languageSelect">
+    <option value="en" selected>English</option>
+    <option value="es">Spanish</option>
+    <option value="fr">French</option>
+    <option value="de">German</option>
+    <option value="zh">Chinese</option>
+    <option value="ar">Arabic</option>
+    <option value="sn">Shona</option>
+    <option value="nd">Ndebele</option>
+    <!-- add more as needed -->
+  </select>
+
+  <select id="reasonTemplate">
+    <option value="">-- Select a Suggested Reason --</option>
+  </select>
+  
+  <textarea id="banReason" placeholder="Explain why your account should be unbanned"></textarea>
+  <div style="font-size:0.9em;color:#a0ff00;">Use at least 20 characters for a proper request.</div>
+  <button class="action" onclick="requestUnban()">Generate Unban Email</button>
+  <div id="unbanOutput" class="result"></div>
+</section>
+
+<section id="help">
+  <h2>Contact & Help</h2>
+  <p>📞 WhatsApp: <a href="https://wa.me/263779540058" target="_blank">+263779540058</a></p>
+  <p>📧 Email: <a href="mailto:praisemaushe4@gmail.com">praisemaushe4@gmail.com</a></p>
+  <p>💬 WhatsApp Group: <a href="https://chat.whatsapp.com/CT1nlh0tXG9CrSOKKFPyPB?mode=hqctcla" target="_blank">Join Group</a></p>
+  <p>📺 Channel: <a href="https://whatsapp.com/channel/0029Vb3WyN6GehEUv1g4sS43" target="_blank">Visit Channel</a></p>
+</section>
+
+<footer>
+  <p>Created by <strong>MASTER IP</strong></p>
+  <p>📞 WhatsApp: <a href="https://wa.me/263779540058" target="_blank">+263779540058</a></p>
+  <p>📧 Email: <a href="mailto:praisemaushe4@gmail.com">praisemaushe4@gmail.com</a></p>
+  <p>💬 Group: <a href="https://chat.whatsapp.com/CT1nlh0tXG9CrSOKKFPyPB?mode=hqctcla" target="_blank">Join Group</a></p>
+  <p>📺 Channel: <a href="https://whatsapp.com/channel/0029Vb3WyN6GehEUv1g4sS43" target="_blank">Visit Channel</a></p>
+</footer>
+
+<script>
+// Tab Navigation
+const tabs = document.querySelectorAll('.tab-btn');
+const sections = document.querySelectorAll('section');
+
+tabs.forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    sections.forEach(s=>s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Smart Analyzer
+function analyze() {
+  let number = document.getElementById("number").value.trim();
+  let violation = parseInt(document.getElementById("violation").value);
+  let frequency = parseInt(document.getElementById("frequency").value);
+
+  if(!number || violation===0 || frequency===0){
+    alert("Fill all fields for analysis.");
+    return;
+  }
+
+  let score = violation + frequency;
+  let recommendation = "";
+  if(score<=2) recommendation = "⚠ Low Risk: Consider blocking the user.";
+  else if(score<=4) recommendation = "⚠ Medium Risk: Report inside WhatsApp.";
+  else recommendation = "🚨 High Risk: Prepare formal complaint to WhatsApp Support.";
+
+  document.getElementById("reportOutput").innerHTML = `
+    <h3>Analysis Result</h3>
+    <p>Risk Score: ${score}</p>
+    <p>${recommendation}</p>
+    <button class="action" onclick="generateEmail('${number}')">Generate Support Email</button>
+  `;
+}
+
+// Generate report email
+function generateEmail(number){
+  let subject = "Report WhatsApp Policy Violation";
+  let body = "Hello WhatsApp Support,%0D%0A%0D%0AI would like to report the number " 
+             + number + " for violating WhatsApp policies.%0D%0APlease review this case.%0D%0A%0D%0AThank you.";
+  window.location.href = `mailto:support@whatsapp.com?subject=${subject}&body=${body}`;
+}
+
+// Suggested reasons by language
+const reasons = {
+  en: ["I was banned by mistake. I follow all WhatsApp rules.","My account was mistakenly flagged as spam. Please review."],
+  es: ["Fui bloqueado por error. Sigo todas las reglas de WhatsApp.","Mi cuenta fue marcada como spam por error. Por favor revise."],
+  fr: ["J'ai été banni par erreur. Je respecte toutes les règles de WhatsApp.","Mon compte a été marqué comme spam par erreur. Veuillez examiner."],
+  de: ["Ich wurde fälschlicherweise gesperrt. Ich befolge alle WhatsApp-Regeln.","Mein Konto wurde fälschlicherweise als Spam markiert. Bitte prüfen."],
+  zh: ["我的账户被误封。我遵守所有WhatsApp规则。","我的账户被误标为垃圾信息。请审核。"],
+  ar: ["تم حظري عن طريق الخطأ. أتبع جميع قواعد WhatsApp.","تم تصنيف حسابي عن طريق الخطأ على أنه سبام. يرجى المراجعة."],
+  sn: ["Akaunti yangu yabviswa ndisina kuita chinhu chakanganisa.","Akaunti yangu yakapomerwa spam zvisiri izvo. Ndapota ongorora."],
+  nd: ["I-akhawunti yami ivaliwe ngaphandle kwesizathu.","I-akhawunti yami iphahlwe njenge-spam ngaphandle kwesizathu. Sicela uhlole."]
+};
+
+const reasonSelect = document.getElementById("reasonTemplate");
+const languageSelect = document.getElementById("languageSelect");
+
+// Populate reasons based on language
+function updateReasons(){
+  reasonSelect.innerHTML = '<option value="">-- Select a Suggested Reason --</option>';
+  const lang = languageSelect.value;
+  reasons[lang].forEach(r=>{
+    const option = document.createElement("option");
+    option.value = r;
+    option.textContent = r;
+    reasonSelect.appendChild(option);
+  });
+}
+languageSelect.addEventListener("change", updateReasons);
+updateReasons(); // default English
+
+// Auto-fill reason from template
+reasonSelect.addEventListener("change", function(){
+  if(this.value) document.getElementById("banReason").value = this.value;
+});
+
+// Unban Request
+function requestUnban(){
+  let number = document.getElementById("banNumber").value.trim();
+  let reason = document.getElementById("banReason").value.trim();
+
+  if(!number || !reason){
+    alert("Enter your phone number and reason.");
+    return;
+  }
+  if(reason.length<20){
+    alert("Provide a detailed reason (at least 20 characters).");
+    return;
+  }
+
+  let subject = "Request for Account Unban";
+  let body = "Hello WhatsApp Support,%0D%0A%0D%0AI am submitting a request to review my WhatsApp account (" 
+             + number + ") which has been banned.%0D%0AReason: " + reason +
+             "%0D%0A%0D%0APlease kindly review and unban my account if possible.%0D%0A%0D%0AThank you.";
+
+  document.getElementById("unbanOutput").innerHTML = `<p>Email ready! Click below to open your mail client.</p>
+    <button class="action" onclick="window.location.href='mailto:support@whatsapp.com?subject=${subject}&body=${body}'">Send Email</button>`;
+}
+
+// Service Worker for PWA
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg=>console.log('Service Worker Registered',reg))
+      .catch(err=>console.log('Service Worker Failed',err));
+  });
+}
+</script>
+</body>
+</html>
