@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>MASTER IP ULTRA</title>
+
+<style>
+
+body{
+margin:0;
+background:black;
+color:lime;
+font-family:monospace;
+overflow-x:hidden;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+header{
+text-align:center;
+padding:10px;
+border-bottom:1px solid lime;
+background:#111;
+}
+
+.logo{
+width:100%;
+}
+
+.cyberText{
+font-size:12px;
+color:#00ff9c;
+animation:blink 1.5s infinite;
+}
+
+@keyframes blink{
+50%{opacity:0.4}
+}
+
+nav{
+display:flex;
+background:#111;
+border-bottom:1px solid lime;
+}
+
+nav button{
+flex:1;
+padding:12px;
+background:#111;
+border:none;
+color:lime;
+font-weight:bold;
+cursor:pointer;
+}
+
+nav button.active{
+background:lime;
+color:black;
+}
+
+section{
+display:none;
+padding:15px;
+}
+
+section.active{
+display:block;
+}
+
+input,select,textarea{
+width:95%;
+padding:10px;
+margin:8px 0;
+background:#111;
+color:lime;
+border:1px solid lime;
+}
+
+button.action{
+width:95%;
+padding:12px;
+background:lime;
+border:none;
+color:black;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+button.rainbow{
+width:95%;
+padding:14px;
+margin-top:10px;
+border:none;
+font-weight:bold;
+cursor:pointer;
+
+background:linear-gradient(
+45deg,
+red,
+orange,
+yellow,
+green,
+cyan,
+blue,
+purple
+);
+
+color:white;
+}
+
+.result{
+margin-top:15px;
+border:1px solid lime;
+padding:10px;
+}
+
+footer{
+text-align:center;
+padding:10px;
+border-top:1px solid lime;
+background:#111;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOCK SCREEN -->
+
+<div id="lockScreen"
+style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+color:lime;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+z-index:10000;
+">
+
+<h2>MASTER IP SECURITY</h2>
+
+<input type="password" id="passInput" placeholder="Enter security password">
+
+<button class="action" onclick="openTool()">OPEN TOOL</button>
+
+<div id="warningBox"></div>
+
+</div>
+
+<canvas id="matrix"></canvas>
+
+<header>
+
+<img src="https://files.catbox.moe/u1npgd.jpg" class="logo">
+
+<h2>MASTER IP ULTRA</h2>
+
+<div class="cyberText">
+AI CYBER REPORT SYSTEM ACTIVE
+</div>
+
+</header>
+
+<nav>
+
+<button class="tab-btn active" data-tab="report">REPORT</button>
+<button class="tab-btn" data-tab="unban">UNBAN</button>
+<button class="tab-btn" data-tab="help">HELP</button>
+<button class="tab-btn" data-tab="download">DOWNLOAD</button>
+
+</nav>
+
+<section id="report" class="active">
+
+<h3>Report Account</h3>
+
+<select id="country">
+<option value="+263">Zimbabwe +263</option>
+<option value="+27">South Africa +27</option>
+<option value="+267">Botswana +267</option>
+</select>
+
+<input id="number" placeholder="Phone number">
+
+<select id="violation">
+<option value="1">Spam</option>
+<option value="2">Harassment</option>
+<option value="3">Threats</option>
+<option value="4">Impersonation</option>
+<option value="5">Scam</option>
+</select>
+
+<select id="frequency">
+<option value="1">Once</option>
+<option value="2">Multiple Times</option>
+<option value="3">Daily</option>
+</select>
+
+<button class="action" onclick="analyze()">Analyze Case</button>
+
+<div id="reportOutput" class="result"></div>
+
+</section>
+
+<section id="unban">
+
+<h3>Unban Request</h3>
+
+<input id="banNumber" placeholder="+263 number">
+
+<textarea id="banReason"></textarea>
+
+<button class="action" onclick="generateUnban()">Generate Appeal</button>
+
+<div id="unbanOutput" class="result"></div>
+
+</section>
+
+<section id="help">
+
+<h3>System Dashboard</h3>
+
+Reports Generated: <span id="rCount">0</span><br>
+Appeals Generated: <span id="aCount">0</span>
+
+<p>Creator: MASTER IP</p>
+<p>Email: ipmastermaster6@gmail.com</p>
+<p>WhatsApp: +263 779 540 058</p>
+
+</section>
+
+<section id="download">
+
+<h3>Download MASTER IP ULTRA APK</h3>
+
+<button class="action" onclick="downloadAPK()">
+Download APK
+</button>
+
+</section>
+
+<footer>
+MASTER IP ULTRA CYBER TOOL
+</footer>
+
+<script>
+
+const OWNER_WA="263779540058"
+
+function openTool(){
+
+let pass=document.getElementById("passInput").value
+
+if(pass==="securityist404"){
+
+document.getElementById("lockScreen").style.display="none"
+
+}else{
+
+document.getElementById("warningBox").innerHTML=`
+
+<p style="color:red">
+
+Where are you going without password?
+
+</p>
+
+<p style="color:#00ff9c">
+
+Ukuenda kupi usina password
+
+</p>
+
+<button class="rainbow" onclick="requestPassword()">
+
+GET PASSWORD FROM MASTER IP
+
+</button>
+
+`
+
+}
+
+}
+
+function requestPassword(){
+
+let message="Hello MASTER IP. I tried opening MASTER IP ULTRA but I don't have the password. Can I get access?"
+
+window.open(
+"https://wa.me/"+OWNER_WA+
+"?text="+encodeURIComponent(message),
+"_blank"
+)
+
+}
+
+/* tabs */
+
+const tabs=document.querySelectorAll(".tab-btn")
+const sections=document.querySelectorAll("section")
+
+tabs.forEach(btn=>{
+btn.onclick=()=>{
+tabs.forEach(b=>b.classList.remove("active"))
+sections.forEach(s=>s.classList.remove("active"))
+btn.classList.add("active")
+document.getElementById(btn.dataset.tab).classList.add("active")
+}
+})
+
+let reports=0
+let appeals=0
+
+function analyze(){
+
+let num=document.getElementById("number").value
+
+let message="Report prepared for number "+num
+
+reports++
+
+document.getElementById("rCount").innerText=reports
+
+document.getElementById("reportOutput").innerHTML=
+
+`
+<textarea style="height:120px">${message}</textarea>
+`
+
+}
+
+function generateUnban(){
+
+let num=document.getElementById("banNumber").value
+let reason=document.getElementById("banReason").value
+
+let message="Appeal created for "+num+" Reason: "+reason
+
+appeals++
+
+document.getElementById("aCount").innerText=appeals
+
+document.getElementById("unbanOutput").innerHTML=
+
+`
+<textarea style="height:120px">${message}</textarea>
+`
+
+}
+
+function downloadAPK(){
+
+window.location.href="https://freewebsitetoapp.cloudserverbox.com/app-data/free-apps/38972697444/GumBao8J/app-debug.apk"
+
+}
+
+/* matrix */
+
+var c=document.getElementById("matrix")
+var ctx=c.getContext("2d")
+
+c.height=window.innerHeight
+c.width=window.innerWidth
+
+var letters="MASTERIP0123456789".split("")
+var font=14
+var columns=c.width/font
+var drops=[]
+
+for(var x=0;x<columns;x++)drops[x]=1
+
+function draw(){
+
+ctx.fillStyle="rgba(0,0,0,0.05)"
+ctx.fillRect(0,0,c.width,c.height)
+
+ctx.fillStyle="#0F0"
+ctx.font=font+"px monospace"
+
+for(var i=0;i<drops.length;i++){
+
+var text=letters[Math.floor(Math.random()*letters.length)]
+
+ctx.fillText(text,i*font,drops[i]*font)
+
+if(drops[i]*font>c.height && Math.random()>0.975)
+drops[i]=0
+
+drops[i]++
+
+}
+
+}
+
+setInterval(draw,33)
+
+</script>
+
+</body>
+</html>
